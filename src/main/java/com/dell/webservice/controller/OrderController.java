@@ -36,9 +36,9 @@ public class OrderController {
 	@GetMapping("/getorders")
 	public ResponseEntity<?> getOrders(@RequestParam(defaultValue = "0") Integer pageNo, 
             @RequestParam(defaultValue = "10") Integer pageSize,
-            @RequestParam(defaultValue = "id") String sortBy){
+            @RequestParam(defaultValue = "id") String sortBy,@RequestParam(required = false) String username){
 		try {
-			List<Order> list = orderService.getEntityOrders(pageNo, pageSize, sortBy);
+			List<Order> list = orderService.getEntityOrders(pageNo, pageSize, sortBy,username);
 			return new ResponseEntity<List<Order>>(list, new HttpHeaders(), HttpStatus.OK); 
 		}
 		catch(Exception ex) {
@@ -64,26 +64,21 @@ public class OrderController {
 	}
 	
 	@PostMapping("/addorder")
-	public ResponseEntity<?> addOrder(@RequestBody(required = false) Order addOrder,@RequestParam(required = false) String userName){
+	public ResponseEntity<?> addOrder(@RequestBody(required = true) Order addOrder){
 		if(addOrder == null) {
 			return new ResponseEntity<String>("Add Order request body cannot be empty", new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
 		try {
-			boolean check = userService.checkAdmin(userName);
-			if(check == true) {
-				this.orderService.addEntityOrder(addOrder);
-				return new ResponseEntity<Order>(addOrder, new HttpHeaders(), HttpStatus.CREATED);
-			}
-			else {
-				return new ResponseEntity<String>("Unauthorized Request",new HttpHeaders(), HttpStatus.UNAUTHORIZED);
-			}
-		} catch (Exception e) {
+			this.orderService.addEntityOrder(addOrder);
+			return new ResponseEntity<Order>(addOrder, new HttpHeaders(), HttpStatus.CREATED);
+		} 
+		catch (Exception e) {
 			return new ResponseEntity<String>("Unable to add orders",new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@PutMapping("/updateorder/{orderId}")
-	public ResponseEntity<?> updateOrder(@PathVariable("orderId") int id, @RequestBody(required = false) Order updateOrder,@RequestParam(required = false) String userName) {
+	public ResponseEntity<?> updateOrder(@PathVariable("orderId") int id, @RequestBody(required = true) Order updateOrder,@RequestParam(required = false) String userName) {
 		if(updateOrder == null) {
 			return new ResponseEntity<String>("Update Order request body cannot be empty",new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}

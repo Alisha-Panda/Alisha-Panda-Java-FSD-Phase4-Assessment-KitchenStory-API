@@ -74,7 +74,7 @@ public class ProductController {
 	
 	
 	@PostMapping("/addproduct")
-	public ResponseEntity<?> addProduct(@RequestBody(required = false) Product addProduct, @RequestParam(required = false) String userName){
+	public ResponseEntity<?> addProduct(@RequestBody(required = true) Product addProduct, @RequestParam(required = true) String userName){
 		if(addProduct == null) {
 			return new ResponseEntity<String>("Add Product request body cannot be empty", new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
@@ -93,7 +93,7 @@ public class ProductController {
 	}
 	
 	@PutMapping("/updateproduct/{productId}")
-	public ResponseEntity<?> updateProduct(@PathVariable("productId") int id, @RequestBody(required = false) Product updateProduct,@RequestParam(required = false) String userName) {
+	public ResponseEntity<?> updateProduct(@PathVariable("productId") int id, @RequestBody(required = true) Product updateProduct,@RequestParam(required = true) String userName) {
 		if(updateProduct == null) {
 			return new ResponseEntity<String>("Update Product request body cannot be empty",new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
@@ -120,7 +120,7 @@ public class ProductController {
 	}
 	
 	@DeleteMapping("/deleteproduct/{productId}")
-	public ResponseEntity<?> deleteProduct(@PathVariable("productId") int id,@RequestParam(required = false) String userName){
+	public ResponseEntity<?> deleteProduct(@PathVariable("productId") int id,@RequestParam(required = true) String userName){
 		try {
 			boolean check = userService.checkAdmin(userName);
 			if(check == true) {

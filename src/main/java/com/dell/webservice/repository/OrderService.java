@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.dell.webservice.entity.Cart;
 import com.dell.webservice.entity.Order;
 import com.dell.webservice.entity.Product;
 import com.dell.webservice.entity.User;
@@ -26,10 +27,23 @@ public class OrderService {
 	@Autowired
 	UserRepository userRepository;
 	
-	public List<Order> getEntityOrders(Integer pageNo, Integer pageSize, String sortBy) throws Exception{
+	public List<Order> getEntityOrders(Integer pageNo, Integer pageSize, String sortBy, String username) throws Exception{
+		Page<Order> pagedResult;
+		Pageable paging = PageRequest.of(pageNo, pageSize,Sort.by(sortBy));
+		User searchUser = null;
 		try {
-			Pageable paging = PageRequest.of(pageNo, pageSize,Sort.by(sortBy));
-			Page<Order> pagedResult =  orderRepository.findAll(paging);
+			pagedResult =  orderRepository.findAll(paging);
+			if(username != null) {
+				
+				Iterable<User> user = userRepository.findAll();
+				for(User u : user) {
+					if(u.getUsername().equals(username)) {
+						searchUser = u;
+						break;
+					}
+				}
+				pagedResult = orderRepository.findByUserContaining(searchUser, paging);
+			}
 			if(pagedResult.hasContent()) {
 	            return pagedResult.getContent();
 	        } else {
@@ -37,6 +51,7 @@ public class OrderService {
 	        }
 		}
 		catch(Exception ex) {
+			System.out.println(ex.getMessage());
 			throw new Exception("Unable to retrieve orders "+ex.getMessage().toString());
 		}
 	}
@@ -63,7 +78,7 @@ public class OrderService {
 			this.orderRepository.save(addOrder);
 			Iterable<User> users = this.userRepository.findAll();
 			for(User u : users) {
-				if(u.getUsername().equals(addOrder.getName())) {
+				if(u.getUsername().equals(addOrder.getUser().getUsername())){
 					System.out.println("wallet balance");
 					System.out.println(u.getWalletBalance());
 					if(total <= u.getWalletBalance()) {
@@ -74,7 +89,7 @@ public class OrderService {
 						break;
 					}
 					else {
-						throw new Exception("Insufficient balance for user "+addOrder.getName());
+						throw new Exception("Insufficient balance for user "+addOrder.getUser().getUsername());
 					}
 				}
 			}

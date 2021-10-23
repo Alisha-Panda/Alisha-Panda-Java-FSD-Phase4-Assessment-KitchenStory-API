@@ -1,5 +1,6 @@
 package com.dell.webservice.entity;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,7 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,9 +25,6 @@ public class Order {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "eproduct_id")
 	private int id;
-	
-	@Column(name = "name")
-	private String name;
 	
 	@Column(name = "totalPrice")
 	private double totalPrice;
@@ -39,50 +41,43 @@ public class Order {
 	@Column(name = "createdAt")
 	private Date createdAt;
 	
-	@OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
-	private Set<Product> products;
+	@ManyToMany(cascade = {CascadeType.MERGE},fetch = FetchType.EAGER)
+	@JoinTable(
+	name="eorder_eproduct",
+	joinColumns = @JoinColumn( name="orderId"),
+	inverseJoinColumns = @JoinColumn( name="productId")
+	)
+	private List<Product> products;
+	
+	@OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name="user_id")
+	private User user;
 
 	public Order() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Order(String name, double totalPrice, String email, String address, String phoneNo, Set<Product> products) {
-		super();
-		this.name = name;
-		this.totalPrice = totalPrice;
-		this.email = email;
-		this.address = address;
-		this.phoneNo = phoneNo;
-		this.products = products;
-		this.createdAt = new Date();
-	}
-
-	public Order(int id, String name, double totalPrice, String email, String address, String phoneNo,
-			Set<Product> products) {
+	
+	public Order(int id,double totalPrice, String email, String address, String phoneNo,
+			List<Product> products, User user) {
 		super();
 		this.id = id;
-		this.name = name;
 		this.totalPrice = totalPrice;
 		this.email = email;
 		this.address = address;
 		this.phoneNo = phoneNo;
-		this.products = products;
 		this.createdAt = new Date();
+		this.products = products;
+		this.user = user;
 	}
+
+	
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public double getTotalPrice() {
@@ -117,23 +112,38 @@ public class Order {
 		this.phoneNo = phoneNo;
 	}
 
-	public Set<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(Set<Product> products) {
-		this.products = products;
-	}
 	public Date getCreatedAt() {
 		return createdAt;
 	}
+
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", name=" + name + ", totalPrice=" + totalPrice + ", email=" + email + ", address="
-				+ address + ", phoneNo=" + phoneNo + ", createdAt=" + createdAt + ", products=" + products + "]";
+		return "Order [id=" + id + ", totalPrice=" + totalPrice + ", email=" + email + ", address=" + address
+				+ ", phoneNo=" + phoneNo + ", createdAt=" + createdAt + ", products=" + products + ", user=" + user
+				+ "]";
 	}
+
+
+
 
 }
