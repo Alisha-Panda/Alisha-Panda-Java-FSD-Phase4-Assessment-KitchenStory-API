@@ -25,6 +25,9 @@ public class OrderService {
 	OrderRepository orderRepository;
 	
 	@Autowired
+	UserService userService;
+	
+	@Autowired
 	UserRepository userRepository;
 	
 	public List<Order> getEntityOrders(Integer pageNo, Integer pageSize, String sortBy, String username) throws Exception{
@@ -65,8 +68,8 @@ public class OrderService {
 	}
 	public void addEntityOrder(Order addOrder) throws Exception {
 		try {
-			int cflag = 0;
-			int bfalg = 0;
+			System.out.println(addOrder.getUser().getUsername());
+			int flag = 0;
 			double total = 0.0;
 			for( Product prod : addOrder.getProducts()) {
 				System.out.print(prod.getPrice());
@@ -75,27 +78,15 @@ public class OrderService {
 			System.out.println("total balance");
 			System.out.println(total);
 			addOrder.setTotalPrice(total);
-			this.orderRepository.save(addOrder);
-			Iterable<User> users = this.userRepository.findAll();
-			for(User u : users) {
-				if(u.getUsername().equals(addOrder.getUser().getUsername())){
-					System.out.println("wallet balance");
-					System.out.println(u.getWalletBalance());
-					if(total <= u.getWalletBalance()) {
-						double balance = u.getWalletBalance() - total;
-						u.setWalletBalance(balance);
-						this.userRepository.save(u);
-					    cflag = 1;
-						break;
-					}
-					else {
-						throw new Exception("Insufficient balance for user "+addOrder.getUser().getUsername());
-					}
-				}
+			if(total <= addOrder.getUser().getWalletBalance()) {
+				double balance = addOrder.getUser().getWalletBalance() - total;
+				addOrder.getUser().setWalletBalance(balance);
+				this.orderRepository.save(addOrder);
 			}
-			if(cflag == 0) {
-				throw new Exception("Customer not found");
-			}
+			else {
+				throw new Exception("Insufficient Balance");
+			}	
+		
 		}
 		catch(Exception ex) {
 			System.out.println(ex.getMessage().toString());

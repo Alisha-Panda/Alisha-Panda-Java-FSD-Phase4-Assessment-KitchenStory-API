@@ -13,9 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "eorder")
@@ -23,7 +26,7 @@ public class Order {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "eproduct_id")
+	@Column(name = "eorder_id")
 	private int id;
 	
 	@Column(name = "totalPrice")
@@ -48,7 +51,7 @@ public class Order {
 	inverseJoinColumns = @JoinColumn( name="productId")
 	)
 	private List<Product> products;
-	
+
 	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="user_id")
 	private User user;

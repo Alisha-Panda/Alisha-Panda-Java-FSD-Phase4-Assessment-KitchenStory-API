@@ -36,6 +36,7 @@ public class UserService {
 			return false;
 		}
 	}
+
 	
 	public boolean loginEntityUser(User loginUser) {
 		Iterable<User> users = this.userRepository.findAll();
@@ -114,6 +115,8 @@ public class UserService {
 	
 	public void updateEntityUser(User updateUser) throws Exception {
 		try {
+			System.out.println("Inside update");
+			System.out.println(updateUser.getWalletBalance());
 			this.userRepository.save(updateUser);
 		}
 		catch(Exception ex) {

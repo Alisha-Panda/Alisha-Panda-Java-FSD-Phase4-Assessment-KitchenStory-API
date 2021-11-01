@@ -1,11 +1,21 @@
 package com.dell.webservice.entity;
 
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "User")
@@ -34,22 +44,15 @@ public class User {
 	@Column(name = "loggedIn")
 	private boolean loggedIn = false;
 
+
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
+		//TODO Auto-generated constructor stub
 	}
 	
-	public User(String username, String password, String email, String role, double walletBalance, boolean loggedIn) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.role = role;
-		this.walletBalance = walletBalance;
-		this.loggedIn = loggedIn;
-	}
 
-	public User(int id, String username, String password, String email, String role, double walletBalance, boolean loggedIn) {
+	public User(int id, String username, String password, String email, String role, double walletBalance,
+			boolean loggedIn) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -59,6 +62,8 @@ public class User {
 		this.walletBalance = walletBalance;
 		this.loggedIn = loggedIn;
 	}
+
+
 
 
 	public double getWalletBalance() {
@@ -112,16 +117,19 @@ public class User {
 		return loggedIn;
 	}
 
-
+	public boolean getLoggedIn() {
+		return loggedIn;
+	}
+	
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
 	}
+
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", role="
 				+ role + ", walletBalance=" + walletBalance + ", loggedIn=" + loggedIn + "]";
 	}
-	
 
 }

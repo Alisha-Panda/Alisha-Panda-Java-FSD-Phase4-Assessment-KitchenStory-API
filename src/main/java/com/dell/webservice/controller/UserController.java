@@ -55,9 +55,7 @@ public class UserController {
             @RequestParam(defaultValue = "id") String sortBy){
 		try {
 			List<User> userList = userService.getEntityUsers(pageNo, pageSize, sortBy);
-			HashMap<String,List<User>> user = new HashMap<String,List<User>>();
-			user.put("user", userList);
-			return new ResponseEntity<Object>(user, new HttpHeaders(), HttpStatus.OK); 
+			return new ResponseEntity<List<User>>(userList, new HttpHeaders(), HttpStatus.OK); 
 		}
 		catch(Exception ex) {
 			return new ResponseEntity<String>("Unable to fetch users", new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR); 

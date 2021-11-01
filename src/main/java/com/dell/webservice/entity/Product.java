@@ -47,7 +47,7 @@ public class Product {
 	
 	public Product() {
 		super();
-		// TODO Auto-generated constructor stub
+		//TODO Auto-generated constructor stub
 	}
 
 	public Product(int id, String name, double price, String description,String category, String imagePath, String seller) {
