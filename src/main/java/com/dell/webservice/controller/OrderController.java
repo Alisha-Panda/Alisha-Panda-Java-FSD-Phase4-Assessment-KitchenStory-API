@@ -105,7 +105,7 @@ public class OrderController {
 	}
 	
 	@DeleteMapping("/deleteorder/{orderId}")
-	public ResponseEntity<?> deleteOrder(@PathVariable("orderId") int id,@RequestParam(required = false) String userName){
+	public ResponseEntity<?> deleteOrder(@PathVariable("orderId") int id,@RequestParam(required = true) String userName){
 		try {
 			boolean check = userService.checkAdmin(userName);
 			if(check == true) {
@@ -127,4 +127,5 @@ public class OrderController {
 		}
 		
 	}
+	
 }

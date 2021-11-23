@@ -51,20 +51,13 @@ public class ProductController {
 	@GetMapping("/getproduct/{productId}")
 	public ResponseEntity<?> getProduct(@PathVariable("productId") int id, @RequestParam(required = false) String userName) {
 		try {
-			boolean check = userService.checkAdmin(userName);
-			if(check == true) {
-				Optional<Product> product = this.productService.getEntityProduct(id);
-				if(product.isEmpty()) {
-					return new ResponseEntity<String>("Products does not exist with id " + id, new HttpHeaders(), HttpStatus.NOT_FOUND); 
-				}
-				else {
-					return new ResponseEntity<Optional<Product>>(product,new HttpHeaders(), HttpStatus.OK);
-				}
+			Optional<Product> product = this.productService.getEntityProduct(id);
+			if(product.isEmpty()) {
+				return new ResponseEntity<String>("Products does not exist with id " + id, new HttpHeaders(), HttpStatus.NOT_FOUND); 
 			}
 			else {
-				return new ResponseEntity<String>("Unauthorized Request",new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+				return new ResponseEntity<Optional<Product>>(product,new HttpHeaders(), HttpStatus.OK);
 			}
-			
 		}
 		catch(Exception ex) {
 			System.out.println(ex.getMessage().toString());
@@ -93,7 +86,7 @@ public class ProductController {
 	}
 	
 	@PutMapping("/updateproduct/{productId}")
-	public ResponseEntity<?> updateProduct(@PathVariable("productId") int id, @RequestBody(required = true) Product updateProduct,@RequestParam(required = true) String userName) {
+	public ResponseEntity<?> updateProduct(@PathVariable("productId") int id, @RequestBody(required = false) Product updateProduct,@RequestParam(required = true) String userName) {
 		if(updateProduct == null) {
 			return new ResponseEntity<String>("Update Product request body cannot be empty",new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
@@ -120,7 +113,7 @@ public class ProductController {
 	}
 	
 	@DeleteMapping("/deleteproduct/{productId}")
-	public ResponseEntity<?> deleteProduct(@PathVariable("productId") int id,@RequestParam(required = true) String userName){
+	public ResponseEntity<?> deleteProduct(@PathVariable("productId") int id,@RequestParam(required = false) String userName){
 		try {
 			boolean check = userService.checkAdmin(userName);
 			if(check == true) {
