@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dell.webservice.entity.Cart;
-import com.dell.webservice.entity.Order;
-import com.dell.webservice.entity.User;
 import com.dell.webservice.repository.CartService;
-import com.dell.webservice.repository.OrderService;
 import com.dell.webservice.repository.UserService;
 
 
@@ -52,7 +49,7 @@ public class CartController {
 	public ResponseEntity<?> getCart(@PathVariable("cartId") int id) {
 		try {
 			Optional<Cart> cart = this.cartService.getEntityCart(id);
-			if(cart.isEmpty()) {
+			if(!(cart.isPresent())) {
 				return new ResponseEntity<String>("Cart does not exist with id " + id, new HttpHeaders(), HttpStatus.NOT_FOUND); 
 			}
 			else {
@@ -90,7 +87,7 @@ public class CartController {
 		}
 		try {
 			Optional<Cart> getCart= this.cartService.getEntityCart(id);
-			if(getCart.isEmpty()) {
+			if(!(getCart.isPresent())) {
 				return new ResponseEntity<String>("Cart does not exist with id " + id,new HttpHeaders(), HttpStatus.NOT_FOUND);
 			}
 			this.cartService.updateEntityCart(updateCart);
@@ -105,7 +102,7 @@ public class CartController {
 	public ResponseEntity<?> deleteCart(@PathVariable("cartId") int id){
 		try {
 			Optional<Cart> getCart = this.cartService.getEntityCart(id);
-			if(getCart.isEmpty()) {
+			if(!(getCart.isPresent())) {
 				return new ResponseEntity<String>("Cart does not exist with id " + id,new HttpHeaders(), HttpStatus.NOT_FOUND);
 			}
 			else {

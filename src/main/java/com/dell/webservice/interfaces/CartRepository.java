@@ -5,7 +5,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.dell.webservice.entity.Cart;
-import com.dell.webservice.entity.Product;
 import com.dell.webservice.entity.User;
 
 

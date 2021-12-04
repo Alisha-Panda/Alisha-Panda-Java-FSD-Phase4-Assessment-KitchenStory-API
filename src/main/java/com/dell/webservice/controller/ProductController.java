@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dell.webservice.entity.Order;
 import com.dell.webservice.entity.Product;
-import com.dell.webservice.entity.User;
-import com.dell.webservice.interfaces.UserRepository;
 import com.dell.webservice.repository.ProductService;
 import com.dell.webservice.repository.UserService;
 
@@ -52,7 +49,7 @@ public class ProductController {
 	public ResponseEntity<?> getProduct(@PathVariable("productId") int id, @RequestParam(required = false) String userName) {
 		try {
 			Optional<Product> product = this.productService.getEntityProduct(id);
-			if(product.isEmpty()) {
+			if(!(product.isPresent() )) {
 				return new ResponseEntity<String>("Products does not exist with id " + id, new HttpHeaders(), HttpStatus.NOT_FOUND); 
 			}
 			else {
@@ -97,7 +94,7 @@ public class ProductController {
 			boolean check = userService.checkAdmin(userName);
 			if(check == true) {
 				Optional<Product> getProduct = this.productService.getEntityProduct(id);
-				if(getProduct.isEmpty()) {
+				if(!(getProduct.isPresent())) {
 					return new ResponseEntity<String>("Product does not exist with id " + id,new HttpHeaders(), HttpStatus.NOT_FOUND);
 				}
 				this.productService.updateEntityProduct(updateProduct);
@@ -118,7 +115,7 @@ public class ProductController {
 			boolean check = userService.checkAdmin(userName);
 			if(check == true) {
 				Optional<Product> getProduct= this.productService.getEntityProduct(id);
-				if(getProduct.isEmpty()) {
+				if(!(getProduct.isPresent())) {
 					return new ResponseEntity<String>("Product does not exist with id " + id,new HttpHeaders(), HttpStatus.NOT_FOUND);
 				}
 				else {

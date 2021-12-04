@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dell.webservice.entity.Order;
-import com.dell.webservice.entity.User;
 import com.dell.webservice.repository.OrderService;
 import com.dell.webservice.repository.UserService;
 
@@ -50,7 +49,7 @@ public class OrderController {
 	public ResponseEntity<?> getOrder(@PathVariable("orderId") int id) {
 		try {
 			Optional<Order> order = this.orderService.getEntityOrder(id);
-			if(order.isEmpty()) {
+			if(!(order.isPresent())) {
 				return new ResponseEntity<String>("Orders does not exist with id " + id, new HttpHeaders(), HttpStatus.NOT_FOUND); 
 			}
 			else {
@@ -89,7 +88,7 @@ public class OrderController {
 			boolean check = userService.checkAdmin(userName);
 			if(check == true) {
 				Optional<Order> getOrder = this.orderService.getEntityOrder(id);
-				if(getOrder.isEmpty()) {
+				if(!(getOrder.isPresent())) {
 					return new ResponseEntity<String>("Order does not exist with id " + id,new HttpHeaders(), HttpStatus.NOT_FOUND);
 				}
 				this.orderService.updateEntityOrder(updateOrder);
@@ -110,7 +109,7 @@ public class OrderController {
 			boolean check = userService.checkAdmin(userName);
 			if(check == true) {
 				Optional<Order> getOrder = this.orderService.getEntityOrder(id);
-				if(getOrder.isEmpty()) {
+				if(!(getOrder.isPresent())) {
 					return new ResponseEntity<String>("Order does not exist with id " + id,new HttpHeaders(), HttpStatus.NOT_FOUND);
 				}
 				else {

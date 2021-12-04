@@ -1,6 +1,5 @@
 package com.dell.webservice.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,7 +64,7 @@ public class UserController {
 	public ResponseEntity<?> getUser(@PathVariable("userId") int id) {
 		try {
 			Optional<User> user = this.userService.getEntityUser(id);
-			if(user.isEmpty()) {
+			if(!(user.isPresent())) {
 				return new ResponseEntity<String>("User does not exist with id " + id, new HttpHeaders(), HttpStatus.NOT_FOUND); 
 			}
 			else {
@@ -104,7 +102,7 @@ public class UserController {
 		}
 		try {
 			Optional<User> getUser = this.userService.getEntityUser(id);
-			if(getUser.isEmpty()) {
+			if(!(getUser.isPresent())) {
 				return new ResponseEntity<String>("User does not exist with id " + id,new HttpHeaders(), HttpStatus.NOT_FOUND);
 			}
 			this.userService.updateEntityUser(updateUser);
@@ -119,7 +117,7 @@ public class UserController {
 	public ResponseEntity<?> deleteProduct(@PathVariable("userId") int id){
 		try {
 			Optional<User> getUser = this.userService.getEntityUser(id);
-			if(getUser.isEmpty()) {
+			if(!(getUser.isPresent())) {
 				return new ResponseEntity<String>("User does not exist with id " + id,new HttpHeaders(), HttpStatus.NOT_FOUND);
 			}
 			else {
