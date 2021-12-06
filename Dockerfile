@@ -1,8 +1,7 @@
-# Start with a base image - in this case JDK 8 Alpine
-FROM openjdk:11
-# Specify JAR location
-ARG JAR_FILE=target/*.jar
-# Copy the JAR
-COPY ${JAR_FILE} app.jar
-# Set ENTRYPOINT in exec form to run the container as an executable
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM java:8
+
+EXPOSE 9003
+
+ADD target/fsd-kitchen-story.jar fsd-kitchen-story.jar
+
+ENTRYPOINT ["java","-jar","fsd-kitchen-story.jar"]
