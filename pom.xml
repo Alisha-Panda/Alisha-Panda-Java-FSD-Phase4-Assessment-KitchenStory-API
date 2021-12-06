@@ -52,6 +52,7 @@
             <artifactId>springfox-swagger2</artifactId>
             <version>2.6.1</version>
         </dependency>
+		
         <!-- springfox-swagger-ui -->
         <dependency>
             <groupId>io.springfox</groupId>
