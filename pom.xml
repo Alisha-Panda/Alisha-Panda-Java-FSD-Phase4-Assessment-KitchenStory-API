@@ -46,7 +46,6 @@
 	    <artifactId>mysql-connector-java</artifactId>
 	    <version>8.0.26</version>
 	</dependency>
-
 	<!-- springfox-swagger2 -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -70,5 +69,4 @@
 		</plugins>
 		<finalName>fsd-kitchen-story</finalName>
 	</build>
-
 </project>
