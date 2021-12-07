@@ -34,7 +34,7 @@ pipeline {
             steps {
                 echo '----------------- This is a build docker image phase ----------'
                 sh '''
-                    docker image build -t ecom-webservice-kitchenstory .
+                    docker image build -t Java-FSD-Phase4-Assessment-Ecommerce-KitchenStory .
                 '''
             }
         }
@@ -43,13 +43,13 @@ pipeline {
             steps {
                 echo '----------------- This is a docker deployment phase ----------'
                 sh '''
-                 (if  [ $(docker ps -a | grep ecom-webservice-kitchenstory | cut -d " " -f1) ]; then \
-                        echo $(docker rm -f ecom-webservice-kitchenstory); \
-                        echo "---------------- successfully removed ecom-webservice-kitchenstory ----------------"
+                 (if  [ $(docker ps -a | grep Java-FSD-Phase4-Assessment-Ecommerce-KitchenStory | cut -d " " -f1) ]; then \
+                        echo $(docker rm -f Java-FSD-Phase4-Assessment-Ecommerce-KitchenStory); \
+                        echo "---------------- successfully removed Java-FSD-Phase4-Assessment-Ecommerce-KitchenStory ----------------"
                      else \
                     echo OK; \
                  fi;);
-            docker container run --restart always --name ecom-webservice-kitchenstory -p 8082:8082 -d ecom-webservice-kitchenstory
+            docker container run --restart always --name Java-FSD-Phase4-Assessment-Ecommerce-KitchenStory -p 8081:8081 -d Java-FSD-Phase4-Assessment-Ecommerce-KitchenStory
             '''
             }
         }
