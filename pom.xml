@@ -67,6 +67,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<finalName>fsd-kitchen-story</finalName>
+		<finalName>ecom-webservice-kitchenstory</finalName>
 	</build>
 </project>

@@ -2,6 +2,6 @@ FROM java:8
 
 EXPOSE 8082
 
-ADD target/fsd-kitchen-story.jar fsd-kitchen-story.jar
+ADD target/ecom-webservice-kitchenstory.jar ecom-webservice-kitchenstory.jar
 
-ENTRYPOINT ["java","-jar","fsd-kitchen-story.jar"]
+ENTRYPOINT ["java","-jar","ecom-webservice-kitchenstory.jar"]
