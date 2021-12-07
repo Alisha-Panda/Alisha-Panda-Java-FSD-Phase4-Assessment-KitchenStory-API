@@ -41,7 +41,7 @@ pipeline {
 
         stage('Docker Deploy') {
             steps {
-                echo '----------------- This is a docker deploment phase ----------'
+                echo '----------------- This is a docker deployment phase ----------'
                 sh '''
                  (if  [ $(docker ps -a | grep ecom-webservice-kitchenstory | cut -d " " -f1) ]; then \
                         echo $(docker rm -f ecom-webservice-kitchenstory); \
