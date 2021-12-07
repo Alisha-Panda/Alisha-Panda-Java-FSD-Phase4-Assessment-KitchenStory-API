@@ -1,7 +1,8 @@
-FROM java:8
+FROM openjdk:8-jdk
 
-EXPOSE 8081
+COPY target/ecom-webservice-kitchenstory.jar ecom-webservice-kitchenstory.jar
 
-ADD target/fsd-kitchen-story.jar fsd-kitchen-story.jar
+CMD ["java","-jar","ecom-webservice-kitchenstory.jar"]
 
-ENTRYPOINT ["java","-jar","fsd-kitchen-story.jar"]
+RUN echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
