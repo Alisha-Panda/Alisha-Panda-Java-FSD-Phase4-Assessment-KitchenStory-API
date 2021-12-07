@@ -1,6 +1,6 @@
 FROM java:8
 
-EXPOSE 8080
+EXPOSE 8081
 
 ADD target/fsd-kitchen-story.jar fsd-kitchen-story.jar
 
