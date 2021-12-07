@@ -1,6 +1,6 @@
 FROM java:8
 
-EXPOSE 8081
+EXPOSE 8082
 
 ADD target/ecom-webservice-kitchenstory.jar ecom-webservice-kitchenstory.jar
 
