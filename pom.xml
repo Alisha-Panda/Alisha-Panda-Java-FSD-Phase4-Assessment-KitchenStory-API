@@ -75,6 +75,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>java-fsd-phase4-assessment-ecommerce-kitchenstory-0.0.1-SNAPSHOT</finalName>
+		<finalName>java-fsd-phase4-assessment-ecommerce-kitchenstory-0.0.1-snapshot</finalName>
 	</build>
 </project>
