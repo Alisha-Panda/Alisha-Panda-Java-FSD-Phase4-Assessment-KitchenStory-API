@@ -10,11 +10,11 @@
 	</parent>
 	<groupId>com.dell.webservice</groupId>
 	<artifactId>Java-FSD-Phase4-Assessment-Ecommerce-KitchenStory</artifactId>
-	<version>0.0.1</version>
-	<name>Java-FSD-Phase4-Assessment-Ecommerce-KitchenStory</name>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>java-fsd-phase4-assessment-ecommerce-kitchenstory</name>
 	<description>Ecommerce website for Kitchen Story</description>
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -66,16 +66,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
 		</plugins>
-		<finalName>ecom-webservice-kitchenstory</finalName>
+		<finalName>java-fsd-phase4-assessment-ecommerce-kitchenstory-0.0.1-SNAPSHOT</finalName>
 	</build>
 </project>
